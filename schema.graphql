@@ -1,0 +1,91 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Mutation {
+    addPromo1(input: NewPromo1!): Promo1
+    addPromo2(input: NewPromo2!): Promo2
+    addPromo3(input: NewPromo3!): Promo3
+    addToCart(input: NewItem!): Cart!
+    removeCart: Boolean!
+}
+
+type Query {
+    checkout: Checkout!
+}
+
+type Checkout {
+    items: [CheckoutItem!]!
+    total_price: Float!
+}
+
+type CheckoutItem {
+    sku: String!
+    name: String!
+    qty: Int!
+    price: Float!
+    reward_sku: String!
+    reward_qty: Int!
+    disc_perc: Float!
+    disc_qty: Int!
+}
+
+type Cart {
+    items: [Item!]!
+}
+
+type Item {
+    sku: String!
+    name: String!
+    qty: Int!
+    price: Float!
+}
+
+input NewItem {
+    sku: String!
+    name: String!
+    qty: Int!
+    price: Float!
+}
+
+# Buy mX Get nY
+type Promo1 {
+    qualifier_sku: String!
+    qualifier_qty: Int!
+    reward_sku: String!
+    reward_qty: Int!
+}
+
+# Buy minimal m get discount quantity
+type Promo2 {
+    qualifier_sku: String!
+    qualifier_qty: Int!
+    disc_qty: Int!
+}
+
+# Buy minimal m get discount percentage in decimal
+type Promo3 {
+    qualifier_sku: String!
+    qualifier_qty: Int!
+    disc_perc: Float!
+}
+
+input NewPromo1 {
+    qualifier_sku: String!
+    qualifier_qty: Int!
+    reward_sku: String!
+    reward_qty: Int!
+}
+
+input NewPromo2 {
+    qualifier_sku: String!
+    qualifier_qty: Int!
+    disc_qty: Int!
+}
+
+input NewPromo3 {
+    qualifier_sku: String!
+    qualifier_qty: Int!
+    disc_perc: Float!
+}
